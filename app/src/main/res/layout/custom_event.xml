@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="72dp"
+    android:focusable="true"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="12dp"
+        android:focusable="true"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground">
+
+        <TextView
+            android:id="@+id/textEvent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:padding="6dp"
+            android:text="Event"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:text="Date: "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textEvent"
+            android:layout_alignParentLeft="true"
+
+            android:padding="6dp"
+            android:layout_alignParentStart="true"
+            android:id="@+id/event_date" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="18-NOV-2016"
+            android:id="@+id/textDate"
+            android:padding="6dp"
+            android:layout_below="@+id/textEvent"
+            android:layout_toRightOf="@+id/event_date"
+            android:layout_toEndOf="@+id/event_date" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Time:"
+            android:padding="6dp"
+            android:layout_below="@+id/textEvent"
+            android:layout_toRightOf="@+id/textDate"
+            android:layout_toEndOf="@+id/textDate" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2:00 - 3:00"
+            android:id="@+id/textTime"
+            android:padding="6dp"
+            android:layout_below="@+id/textEvent"
+            android:layout_toRightOf="@+id/textView"
+            android:layout_toEndOf="@+id/textView" />
+
+
+
+    </RelativeLayout>
+</RelativeLayout>
