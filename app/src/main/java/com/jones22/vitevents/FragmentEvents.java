@@ -86,8 +86,9 @@ public class FragmentEvents extends Fragment {
 
     }
 
-    int skip=0;
-    FindCallback<ParseObject> getAllObjects(){
+    int skip = 0;
+
+    FindCallback<ParseObject> getAllObjects() {
 
         progressBar.setVisibility(View.VISIBLE);
         listEvents.setVisibility(View.GONE);
@@ -103,23 +104,22 @@ public class FragmentEvents extends Fragment {
                         query.setSkip(skip);
                         query.setLimit(limit);
                         query.findInBackground(getAllObjects());
-                    }
-                    else {
+                    } else {
                         //code to show only today's events
 
                         String subdate;
                         String todaysDate = Calendar.getInstance().getTime().toString();
 
                         //Toast.makeText(getActivity(),""+todaysDate,Toast.LENGTH_SHORT).show();
-                        for(int i=0;i<allObjects.size();i++){
+                        for (int i = 0; i < allObjects.size(); i++) {
 
                             try {
-                                subdate=allObjects.get(i).get("date").toString();
-                                if(!subdate.substring(0,10).equals(todaysDate.substring(0,10))){
+                                subdate = allObjects.get(i).get("date").toString();
+                                if (!subdate.substring(0, 10).equals(todaysDate.substring(0, 10))) {
                                     allObjects.remove(i);
                                 }
                                 //String subdateStr = df.format(subdate);
-                            } catch(Exception ex) {
+                            } catch (Exception ex) {
                                 ex.printStackTrace();
                             }
                             //Toast.makeText(getActivity(),""+  subdate.compareTo(todaysDate),Toast.LENGTH_SHORT).show();
@@ -130,9 +130,8 @@ public class FragmentEvents extends Fragment {
                         progressBar.setVisibility(View.GONE);
                         listEvents.setVisibility(View.VISIBLE);
                     }
-                }
-                else {
-                    Toast.makeText(getActivity(), "Error: " + e.getMessage(),Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);
 
 
@@ -142,6 +141,7 @@ public class FragmentEvents extends Fragment {
     }
 
     private EventsDataSource dataSource;
+
     @Override
     public void onResume() {
         dataSource.open();
@@ -164,7 +164,7 @@ public class FragmentEvents extends Fragment {
         final ArrayAdapter<Events> adapter = new ArrayAdapter<Events>(getActivity(),
                 android.R.layout.simple_list_item_1, values);
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_events,container,false);
+        View view = inflater.inflate(R.layout.fragment_events, container, false);
         listEvents = (RecyclerView) view.findViewById(R.id.listEvents);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         swipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefresh);
@@ -199,13 +199,14 @@ public class FragmentEvents extends Fragment {
         });
 
         listEvents.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapterEvents = new AdapterEvents(getActivity(),adapter);
+        adapterEvents = new AdapterEvents(getActivity(), adapter);
         listEvents.setAdapter(adapterEvents);
 
 
         final GestureDetector mGestureDetector = new GestureDetector(getActivity(), new GestureDetector.SimpleOnGestureListener() {
 
-            @Override public boolean onSingleTapUp(MotionEvent e) {
+            @Override
+            public boolean onSingleTapUp(MotionEvent e) {
                 return true;
             }
 
@@ -217,7 +218,7 @@ public class FragmentEvents extends Fragment {
                 View child = recyclerView.findChildViewUnder(motionEvent.getX(), motionEvent.getY());
 
                 if (child != null && mGestureDetector.onTouchEvent(motionEvent)) {
-                    Log.i("Child",child.toString());
+                    Log.i("Child", child.toString());
 
 
                     List<ParseObject> tempObj;
@@ -228,42 +229,37 @@ public class FragmentEvents extends Fragment {
                     query.findInBackground(new FindCallback<ParseObject>() {
                         public void done(List<ParseObject> markers, ParseException e) {
                             if (e == null) {
-                                Intent intent = new Intent(getActivity(),ActivityEvent.class);
+                                Intent intent = new Intent(getActivity(), ActivityEvent.class);
                                 List<Events> values = dataSource.getAllEvents(markers);
-                                Events temp = values.get(position);
-                                intent.putExtra("name",temp.getName());
-                                intent.putExtra("date",temp.getDate().substring(0,10));
-                                intent.putExtra("time",temp.getTime());
-                                intent.putExtra("venue",temp.getVenue());
-                                intent.putExtra("fee",temp.getFee());
-                                intent.putExtra("desc",temp.getDesc());
-                                intent.putExtra("clubName",temp.getClubName());
-                                /*Bitmap img = temp.getImage();
-                                Log.i("Temp","Image");
-                                Log.i("Temp",img.toString());
-                                ByteArrayOutputStream _bs = new ByteArrayOutputStream();
-                                img.compress(Bitmap.CompressFormat.JPEG,50,_bs);
-                                intent.putExtra("image",_bs.toByteArray());
-                                //intent.putExtra();*/
-                                startActivity(intent);
+                                Events temp = values.get(position + bias);
+                                Log.i("Bias Value", String.valueOf(bias));
+                                try {
+                                    intent.putExtra("name", temp.getName());
+                                    intent.putExtra("date", temp.getDate().substring(0, 10));
+                                    intent.putExtra("time", temp.getTime());
+                                    intent.putExtra("venue", temp.getVenue());
+                                    intent.putExtra("fee", temp.getFee());
+                                    intent.putExtra("desc", temp.getDesc());
+                                    intent.putExtra("clubName", temp.getClubName());
+                                    intent.putExtra("register", temp.getRegister());
+                                    //Log.i("Temp","getReg");
+                                    intent.putExtra("knowMore", temp.getKnowMore());
+                                    intent.putExtra("image", temp.getImage());
+                                    startActivity(intent);
+                                }
+                                catch (Exception e1)
+                                {
+                                    e1.printStackTrace();
+                                    Toast.makeText(getActivity(), "Server Error! Please try again later", Toast.LENGTH_SHORT).show();
+                                }
                             } else {
-                                Log.i("Events","Not");
+                                Log.i("Events", "Not");
                                 e.printStackTrace();
-                                Toast.makeText(getActivity(), "Error: " + e.getMessage(),Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                                 progressBar.setVisibility(View.GONE);
                             }
                         }
                     });
-
-
-                    /*
-                    intent.putExtra("name",adapter.getItem(recyclerView.getChildPosition(child)).getName());
-                    intent.putExtra("date",adapter.getItem(recyclerView.getChildPosition(child)).getDate());
-                    intent.putExtra("time",adapter.getItem(recyclerView.getChildPosition(child)).getTime());
-                    intent.putExtra("venue",adapter.getItem(recyclerView.getChildPosition(child)).getVenue());
-                    intent.putExtra("fee",adapter.getItem(recyclerView.getChildPosition(child)).getFee());
-                    intent.putExtra("desc",adapter.getItem(recyclerView.getChildPosition(child)).getDesc());
-                    */
 
                     //Intent intent = new Intent(Intent.ACTION_VIEW);
                     //intent.setData(Uri.parse(allObjects.get(recyclerView.getChildPosition(child)).getString("facebook")));
@@ -297,7 +293,8 @@ public class FragmentEvents extends Fragment {
 
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Events");
         query.setLimit(1000);
-        Log.i("Events","Refreshing");
+        Log.i("Events", "Refreshing");
+        query.setLimit(1000).orderByAscending("date");
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> markers, ParseException e) {
                 if (e == null) {
@@ -311,21 +308,27 @@ public class FragmentEvents extends Fragment {
                     */
                     allObjects.clear();
                     allObjects = markers;
-                    Log.i("Length",String.valueOf(allObjects.size()));
+                    Log.i("Length", String.valueOf(allObjects.size()));
                     String subdate;
                     String todaysDate = Calendar.getInstance().getTime().toString();
 
                     //Toast.makeText(getActivity(),""+todaysDate,Toast.LENGTH_SHORT).show();
-                    for(int i=0;i<allObjects.size();i++) {
+                    for (int i = 0; i < allObjects.size(); i++) {
 
                         try {
                             subdate = allObjects.get(i).get("date").toString();
-                            Log.i("Date",subdate);
-                            Log.i("Today",todaysDate);
+                            /*Log.i("Date", subdate);
+                            Log.i("Today", todaysDate);*/
                             if (!subdate.substring(0, 10).equals(todaysDate.substring(0, 10))) {
                                 allObjects.remove(i);
+                                Log.i("biasing",subdate.substring(4, 7));
+                                if (Integer.parseInt(subdate.substring(8, 10)) < Integer.parseInt(todaysDate.substring(8, 10)) && subdate.substring(4, 7).equals(todaysDate.substring(4, 7))) {
+                                    bias++;
+                                    /*Log.i("EventBiasing",allObjects.get(i).getString("EventName"));
+                                    Log.i("Bias Value",String.valueOf(bias));*/
+                                }
                                 --i;
-                                bias++;
+                                //bias++;
                             }
                             //String subdateStr = df.format(subdate);
                         } catch (Exception ex) {
@@ -336,7 +339,7 @@ public class FragmentEvents extends Fragment {
                     List<Events> values = dataSource.getAllEvents(allObjects);
                     final ArrayAdapter<Events> adapter = new ArrayAdapter<Events>(getActivity(),
                             android.R.layout.simple_list_item_1, values);
-                    adapterEvents = new AdapterEvents(getActivity(),adapter);
+                    adapterEvents = new AdapterEvents(getActivity(), adapter);
                     listEvents.setAdapter(adapterEvents);
                     swipeRefresh.setRefreshing(false);
                     /*
@@ -378,9 +381,9 @@ public class FragmentEvents extends Fragment {
                     swipeRefresh.setRefreshing(false);
 
                 } else {
-                    Log.i("Events","Not");
+                    Log.i("Events", "Not");
                     e.printStackTrace();
-                    Toast.makeText(getActivity(), "Error: " + e.getMessage(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);
                 }
             }

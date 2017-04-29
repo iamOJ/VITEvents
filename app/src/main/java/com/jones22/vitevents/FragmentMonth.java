@@ -231,6 +231,10 @@ public class FragmentMonth extends Fragment {
                                 intent.putExtra("fee", temp.getFee());
                                 intent.putExtra("desc", temp.getDesc());
                                 intent.putExtra("clubName", temp.getClubName());
+                                intent.putExtra("register",temp.getRegister());
+                                Log.i("Temp","getReg");
+                                intent.putExtra("knowMore",temp.getKnowMore());
+                                intent.putExtra("image",temp.getImage());
                                 /*Bitmap img = temp.getImage();
                                 Log.i("Temp","Image");
                                 Log.i("Temp",img.toString());

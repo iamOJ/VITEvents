@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    private TeachersDataSource teachersDataSource;
     private EventsDataSource eventsDataSource;
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

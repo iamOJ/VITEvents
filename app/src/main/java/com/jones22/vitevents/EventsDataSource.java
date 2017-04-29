@@ -88,9 +88,15 @@ public class EventsDataSource {
             Log.i("EventName",String.valueOf(i)+" + " + tempObj.get("EventName").toString());
             event.setDesc(tempObj.get("details").toString());
             event.setVenue(tempObj.get("venue").toString());
-            event.setTime(tempObj.get("time").toString());
+            event.setRegister(tempObj.get("register").toString());
+            //Log.i("Register", String.valueOf(i) + " " + tempObj.get("register").toString());
+            event.setKnowMore(tempObj.get("knowmore").toString());
+            //event.setTime(tempObj.get("time").toString());
+            //Log.i("EventTime",String.valueOf(i)+" + " + tempObj.get("venue").toString());
             event.setClubName(tempObj.get("Club").toString());
             ParseFile fileObject = tempObj.getParseFile("image");
+            String imgURL = tempObj.getParseFile("image").getUrl();
+            event.setImage(imgURL);
             /*
             fileObject.getDataInBackground(new GetDataCallback() {
                 @Override

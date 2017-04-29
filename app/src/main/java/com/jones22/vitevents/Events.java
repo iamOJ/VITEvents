@@ -1,8 +1,5 @@
 package com.jones22.vitevents;
 
-import android.graphics.Bitmap;
-import android.util.Log;
-
 public class Events {
 
     private String date;
@@ -13,21 +10,39 @@ public class Events {
     private String clubId;
     private String name;
     private String eventId;
-    private Bitmap bMap;
+    private String ImageURL;
     private String clubName;
+    private String knowMore;
+    private String register;
+
+    public void setKnowMore(String knowMore){
+        this.knowMore = knowMore;
+    }
+
+    public String getKnowMore(){
+        return knowMore;
+    }
+
+    public void setRegister(String register1){
+        this.register = register1;
+        //Log.i("Events.java",register);
+    }
+
+    public String getRegister(){
+        //Log.i("Events.get",register);
+        return this.register;
+    }
 
     public String getEventId() {
         return eventId;
     }
 
-    public Bitmap getImage(){
-        return bMap;
+    public String getImage(){
+        return ImageURL;
     }
 
-    public void setImage(Bitmap image){
-        //bMap.createBitmap(image);
-        bMap = image;
-        Log.i("setImage",image.toString());
+    public void setImage(String URL){
+        ImageURL = URL;
     }
 
     public void setEventId(String eventId) {
