@@ -324,8 +324,8 @@ public class FragmentEvents extends Fragment {
                                 Log.i("biasing",subdate.substring(4, 7));
                                 if (Integer.parseInt(subdate.substring(8, 10)) < Integer.parseInt(todaysDate.substring(8, 10)) && subdate.substring(4, 7).equals(todaysDate.substring(4, 7))) {
                                     bias++;
-                                    /*Log.i("EventBiasing",allObjects.get(i).getString("EventName"));
-                                    Log.i("Bias Value",String.valueOf(bias));*/
+                                    Log.i("EventBiasing",allObjects.get(i).getString("EventName"));
+                                    Log.i("Bias Value",String.valueOf(bias));
                                 }
                                 --i;
                                 //bias++;

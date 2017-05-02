@@ -91,7 +91,7 @@ public class EventsDataSource {
             event.setRegister(tempObj.get("register").toString());
             //Log.i("Register", String.valueOf(i) + " " + tempObj.get("register").toString());
             event.setKnowMore(tempObj.get("knowmore").toString());
-            //event.setTime(tempObj.get("time").toString());
+            event.setTime(tempObj.get("time").toString());
             //Log.i("EventTime",String.valueOf(i)+" + " + tempObj.get("venue").toString());
             event.setClubName(tempObj.get("Club").toString());
             ParseFile fileObject = tempObj.getParseFile("image");
